@@ -1,66 +1,72 @@
 const d = document;
 let result = d.querySelector(".result");
-const botones = document.querySelectorAll('button');
+const botones = document.querySelectorAll("button");
 let expresion = "";
-
 
 // Agrega un evento de clic a cada botón
 botones.forEach((boton) => {
-  boton.addEventListener('click', (e) => {
-    
-    if(e.target.matches(".equals")){
-      return result.innerHTML = "hello word";
+  boton.addEventListener("click", (e) => {
+    if (e.target.matches(".equals")) {
+      return (result.innerHTML = calculator());
     }
 
-    if(e.target.matches("#danger")){
+    if (e.target.matches("#danger")) {
       expresion = "";
-      return result.innerHTML = "0";
+      return (result.innerHTML = "0");
     }
 
-    if(e.target.matches("#del")){
+    if (e.target.matches("#del")) {
       expresion = expresion.slice(0, -1);
-      return result.innerHTML = expresion;
+      return (result.innerHTML = expresion);
     }
-    
-    expresion+= e.target.id;
+
+    expresion += e.target.id;
     result.innerHTML = expresion;
   });
 });
 
-/*
-d.querySelector("#cal").addEventListener("click", (e) => {
-  let expresion = prompt("Ingresa los valores a calcular");
+// Verifica la operacion aritmetica a ejecutar en la expresion (+ - * /) y la resuelve
+function calculator() {
   let partes;
   let result = 0;
-  let operando1 = "";
-  let operando2 = "";
+  let operando1 = 0;
+  let operando2 = 0;
 
-  // Estas estructuras condicionales evaluan si la cadena contiene "+ , -, * ó /" y realiza la operacion correspondiente
-  if (expresion.includes("+")) {
-    partes = expresion.split("+");
-    operando1 = parseFloat(partes[0]);
-    operando2 = parseFloat(partes[1]);
-    result = `${operando1 + operando2}`;
-  } else if (expresion.includes("-")) {
-    partes = expresion.split("-");
-    operando1 = parseFloat(partes[0]);
-    operando2 = parseFloat(partes[1]);
-    result = `${operando1 - operando2}`;
-  } else if (expresion.includes("*")) {
-    partes = expresion.split("*");
-    operando1 = parseFloat(partes[0]);
-    operando2 = parseFloat(partes[1]);
-    result = `${operando1 * operando2}`;
-  } else if (expresion.includes("/")) {
-    partes = expresion.split("/");
-    operando1 = parseFloat(partes[0]);
-    operando2 = parseFloat(partes[1]);
-    operando1 === 0 || operando2 === 0
-      ? (result = "Error")
-      : (result = `${operando1 / operando2}`);
+  switch (true) {
+    case expresion.includes("+"):
+      partes = expresion.split("+");
+      operando1 = parseFloat(partes[0]);
+      operando2 = parseFloat(partes[1]);
+      result = operando1 + operando2;
+      expresion = result.toString();
+      return expresion;
+    case expresion.includes("-"):
+      partes = expresion.split("-");
+      operando1 = parseFloat(partes[0]);
+      operando2 = parseFloat(partes[1]);
+      result = operando1 - operando2;
+      expresion = result.toString();
+      return expresion;
+    case expresion.includes("*"):
+      partes = expresion.split("*");
+      operando1 = parseFloat(partes[0]);
+      operando2 = parseFloat(partes[1]);
+      result = operando1 * operando2;
+      expresion = result.toString();
+      return expresion;
+    case expresion.includes("/"):
+      partes = expresion.split("/");
+      operando1 = parseFloat(partes[0]);
+      operando2 = parseFloat(partes[1]);
+      if (operando1 === 0 || operando2 === 0) {
+        return "Error";
+      } else {
+        result = operando1 / operando2;
+        expresion = result.toFixed(1).toString();
+        return expresion;
+      }
   }
 
-  console.log(result); // Salida
-});
-
-*/
+  console.log(result);
+  return result;
+}
